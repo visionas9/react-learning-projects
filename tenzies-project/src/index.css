@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+}
+
+body {
+  font-family: Karla;
+  background-color: #0b2434;
+}
+
+.parent-div {
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  max-width: 400px;
+  border-radius: 10px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.parent-div h1 {
+  font-size: 2.5rem;
+}
+.parent-div p {
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.child-div {
+  display: grid;
+  grid-template: auto auto / repeat(5, 1fr);
+  gap: 15px;
+}
+
+/* Base Die Style (Unheld */
+.die-face {
+  height: 50px;
+  width: 50px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 700;
+  border: none;
+  background-color: white;
+  color: #2b283a;
+  transition: all 0.1s ease;
+}
+/* The Dice (HELD State) */
+.die-face.held {
+  background-color: #59e391;
+  color: #2b283a;
+}
+
+/* 5. The Roll Button */
+.roll-btn {
+  height: 50px;
+  width: 150px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5035ff;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.25);
+}
+
+.roll-btn:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.roll-btn:focus {
+  outline: none;
+}
