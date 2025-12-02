@@ -30,4 +30,4 @@ A fast-paced, interactive dice game built to master React State and Side Effects
 
 ### 🌐 Live Demo
 
-👉
+👉 magical-elf-c0f967.netlify.app
