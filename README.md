@@ -9,7 +9,7 @@ This repository tracks my progress as I master modern web development with **Rea
 | Project             | Description                     | Live Demo                                           | Key Concepts                        |
 | :------------------ | :------------------------------ | :-------------------------------------------------- | :---------------------------------- |
 | **1. Tenzies Game** | A fast-paced dice rolling game. | [Play here](https://magical-elf-c0f967.netlify.app) | `useState`, `useEffect`, Game Logic |
-| **2. Coming Soon**  | \_Next project loading...       |
+| **Assembly: Endgame**  | A word guess game       |
 | **3. Coming Soon**  | \_Next project loading...       |
 
 ## 🛠️ Tech Stack & Tools
