@@ -109,3 +109,15 @@ button.new-game {
   margin-inline: auto;
   cursor: pointer;
 }
+
+section.keyboard > button.correct {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+section.keyboard > button.wrong {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
