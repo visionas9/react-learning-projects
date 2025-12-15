@@ -12,6 +12,15 @@ export default function App() {
     (letter) => !currentWord.includes(letter)
   ).length;
 
+  //win/loss states
+  const isGameWon = currentWord
+    .split("")
+    .every((letter) => guessedLetters.includes(letter));
+
+  const isGameLost = wrongGuessCount >= languages.length;
+
+  const isGameOver = isGameWon || isGameLost;
+
   function addGuessedLetter(letter) {
     setGuessedLetters((prevLetters) =>
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
@@ -81,7 +90,7 @@ export default function App() {
       <section className="language-chips">{languageElements}</section>
       <section className="word">{letterElements}</section>
       <section className="keyboard">{keyboardElements}</section>
-      <button className="new-game">New Game</button>
+      {isGameOver && <button className="new-game">New Game</button>}
     </main>
   );
 }
