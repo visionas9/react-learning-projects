@@ -18,13 +18,18 @@ export default function App() {
     );
   }
 
-  const languageElements = languages.map((lang) => {
+  const languageElements = languages.map((lang, index) => {
+    const isLangLost = index < wrongGuessCount;
+    const className = clsx("chip", {
+      lost: isLangLost,
+    });
+
     const styles = {
       backgroundColor: lang.backgroundColor,
       color: lang.color,
     };
     return (
-      <span className="chip" style={styles} key={lang.name}>
+      <span className={className} style={styles} key={lang.name}>
         {lang.name}
       </span>
     );
