@@ -67,7 +67,7 @@ export default function App() {
     return (
       <button
         className={className}
-        disabled={isGuessed}
+        disabled={isGameOver || isGuessed}
         key={letter}
         onClick={() => addGuessedLetter(letter)}
       >
