@@ -6,11 +6,11 @@ This repository tracks my progress as I master modern web development with **Rea
 
 ## 📂 My Projects
 
-| Project             | Description                     | Live Demo                                           | Key Concepts                        |
-| :------------------ | :------------------------------ | :-------------------------------------------------- | :---------------------------------- |
-| **1. Tenzies Game** | A fast-paced dice rolling game. | [Play here](https://magical-elf-c0f967.netlify.app) | `useState`, `useEffect`, Game Logic |
-| **Assembly: Endgame**  | A word guess game       |
-| **3. Coming Soon**  | \_Next project loading...       |
+| Project               | Description                     | Live Demo                                             | Key Concepts                                                                   |
+| :-------------------- | :------------------------------ | :---------------------------------------------------- | :----------------------------------------------------------------------------- |
+| **1. Tenzies Game**   | A fast-paced dice rolling game. | [Play here](https://magical-elf-c0f967.netlify.app)   | `useState`, `useEffect`, Game Logic                                            |
+| **Assembly: Endgame** | A word guess game               | [Play here](https://rainbow-dasik-03cbdd.netlify.app) | `Derived State`, `Conditional Rendering`, `Lazy State Init`, `Dynamic Styling` |
+| **3. Coming Soon**    | \_Next project loading...       |
 
 ## 🛠️ Tech Stack & Tools
 
