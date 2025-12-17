@@ -1,6 +1,7 @@
 import React from "react";
 import { languages } from "./languages";
 import clsx from "clsx";
+import { getFarewellText } from "./utils";
 
 export default function App() {
   //states
@@ -16,35 +17,17 @@ export default function App() {
   const isGameWon = currentWord
     .split("")
     .every((letter) => guessedLetters.includes(letter));
-
   const isGameLost = wrongGuessCount >= languages.length;
-
   const isGameOver = isGameWon || isGameLost;
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
+  const isLastGuessIncorrect =
+    lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
 
   const gameStatusClass = clsx("game-status", {
     won: isGameWon,
     lose: isGameLost,
+    farewell: !isGameOver && isLastGuessIncorrect,
   });
-
-  const gameWonStatus = isGameWon ? (
-    <div>
-      <h2>You win!</h2>
-      <p>Well done! 🎉</p>
-    </div>
-  ) : null;
-
-  const gameLostStatus = isGameLost ? (
-    <div>
-      <h2>Game Over!</h2>
-      <p>You lose! Better start learning Assembly 😭</p>
-    </div>
-  ) : null;
-
-  function addGuessedLetter(letter) {
-    setGuessedLetters((prevLetters) =>
-      prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
-    );
-  }
 
   const languageElements = languages.map((lang, index) => {
     const isLangLost = index < wrongGuessCount;
@@ -93,6 +76,41 @@ export default function App() {
     );
   });
 
+  function addGuessedLetter(letter) {
+    setGuessedLetters((prevLetters) =>
+      prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
+    );
+  }
+
+  function renderGameStatus() {
+    if (!isGameOver && isLastGuessIncorrect) {
+      return (
+        <p className="farewell-message">
+          {getFarewellText(languages[wrongGuessCount - 1].name)}
+        </p>
+      );
+    }
+
+    if (isGameWon) {
+      return (
+        <>
+          <h2>You win!</h2>
+          <p>Well done! 🎉</p>
+        </>
+      );
+    }
+    if (isGameLost) {
+      return (
+        <>
+          <h2>Game over!</h2>
+          <p>You lose! Better start learning Assembly 😭</p>
+        </>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <main>
       <header>
@@ -102,9 +120,7 @@ export default function App() {
           from Assembly!
         </p>
       </header>
-      <section className={gameStatusClass}>
-        {gameWonStatus || gameLostStatus}
-      </section>
+      <section className={gameStatusClass}>{renderGameStatus()}</section>
       <section className="language-chips">{languageElements}</section>
       <section className="word">{letterElements}</section>
       <section className="keyboard">{keyboardElements}</section>

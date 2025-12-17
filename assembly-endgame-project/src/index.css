@@ -51,6 +51,11 @@ section.game-status.lose {
   background-color: #ba2a2a;
 }
 
+section.game-status.farewell {
+  background-color: #7a5ea7;
+  border: 1px dashed #323232;
+}
+
 section.game-status > p {
   margin: 5px;
 }
