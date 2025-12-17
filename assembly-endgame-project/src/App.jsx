@@ -47,13 +47,17 @@ export default function App() {
     );
   });
 
-  const letterElements = currentWord
-    .split("")
-    .map((letter, index) => (
-      <span key={index}>
-        {guessedLetters.includes(letter) ? letter.toUpperCase() : ""}
+  const letterElements = currentWord.split("").map((letter, index) => {
+    const shouldReveal = isGameLost || guessedLetters.includes(letter);
+    const letterClassName = clsx({
+      missed: isGameLost && !guessedLetters.includes(letter),
+    });
+    return (
+      <span key={index} className={letterClassName}>
+        {shouldReveal ? letter.toUpperCase() : ""}
       </span>
-    ));
+    );
+  });
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 

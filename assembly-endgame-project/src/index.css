@@ -111,6 +111,9 @@ section.word > span {
   font-size: 1.125rem;
   border-bottom: 1px solid #f9f4da;
 }
+section.word > span.missed {
+  color: #ec5d49;
+}
 
 section.keyboard {
   display: flex;
