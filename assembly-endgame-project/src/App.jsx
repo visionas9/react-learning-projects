@@ -21,6 +21,25 @@ export default function App() {
 
   const isGameOver = isGameWon || isGameLost;
 
+  const gameStatusClass = clsx("game-status", {
+    won: isGameWon,
+    lose: isGameLost,
+  });
+
+  const gameWonStatus = isGameWon ? (
+    <div>
+      <h2>You win!</h2>
+      <p>Well done! 🎉</p>
+    </div>
+  ) : null;
+
+  const gameLostStatus = isGameLost ? (
+    <div>
+      <h2>Game Over!</h2>
+      <p>You lose! Better start learning Assembly 😭</p>
+    </div>
+  ) : null;
+
   function addGuessedLetter(letter) {
     setGuessedLetters((prevLetters) =>
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
@@ -83,9 +102,8 @@ export default function App() {
           from Assembly!
         </p>
       </header>
-      <section className="game-status">
-        <h2>You win!</h2>
-        <p>Well done! 🎉</p>
+      <section className={gameStatusClass}>
+        {gameWonStatus || gameLostStatus}
       </section>
       <section className="language-chips">{languageElements}</section>
       <section className="word">{letterElements}</section>
