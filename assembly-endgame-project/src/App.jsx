@@ -1,11 +1,11 @@
 import React from "react";
 import { languages } from "./languages";
 import clsx from "clsx";
-import { getFarewellText } from "./utils";
+import { getFarewellText, getRandomWord } from "./utils";
 
 export default function App() {
   //states
-  const [currentWord, setCurrentWord] = React.useState("react");
+  const [currentWord, setCurrentWord] = React.useState(() => getRandomWord());
   const [guessedLetters, setGuessedLetters] = React.useState([]);
 
   //derived values
@@ -18,7 +18,7 @@ export default function App() {
   const isGameWon = currentWord
     .split("")
     .every((letter) => guessedLetters.includes(letter));
-  const isGameLost = wrongGuessCount >= languages.length;
+  const isGameLost = wrongGuessCount >= languages.length - 1;
   const isGameOver = isGameWon || isGameLost;
   const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
   const isLastGuessIncorrect =
