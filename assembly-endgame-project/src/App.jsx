@@ -8,12 +8,13 @@ export default function App() {
   const [currentWord, setCurrentWord] = React.useState("react");
   const [guessedLetters, setGuessedLetters] = React.useState([]);
 
-  //derived state
+  //derived values
+  const numGuessesLeft = languages.length - 1;
   const wrongGuessCount = guessedLetters.filter(
     (letter) => !currentWord.includes(letter)
   ).length;
 
-  //win/loss states
+  //win/loss values
   const isGameWon = currentWord
     .split("")
     .every((letter) => guessedLetters.includes(letter));
@@ -69,6 +70,8 @@ export default function App() {
         className={className}
         disabled={isGameOver || isGuessed}
         key={letter}
+        aria-disabled={guessedLetters.includes(letter)}
+        aria-label={`Letter ${letter}`}
         onClick={() => addGuessedLetter(letter)}
       >
         {letter.toUpperCase()}
@@ -120,9 +123,29 @@ export default function App() {
           from Assembly!
         </p>
       </header>
-      <section className={gameStatusClass}>{renderGameStatus()}</section>
+      <section className={gameStatusClass} aria-live="polite" role="status">
+        {renderGameStatus()}
+      </section>
       <section className="language-chips">{languageElements}</section>
       <section className="word">{letterElements}</section>
+      {/* Combined visually-hidden aria-live region for status updates */}
+      <section className="sr-only" aria-live="polite" role="status">
+        <p>
+          {currentWord.includes(lastGuessedLetter)
+            ? `Correct! The letter ${lastGuessedLetter} is in the word.`
+            : `Sorry, the letter ${lastGuessedLetter} is not in the word.`}
+          You have {numGuessesLeft} attempts left.
+        </p>
+        <p>
+          Current word:{" "}
+          {currentWord
+            .split("")
+            .map((letter) =>
+              guessedLetters.includes(letter) ? letter + "." : "blank."
+            )
+            .join(" ")}
+        </p>
+      </section>
       <section className="keyboard">{keyboardElements}</section>
       {isGameOver && <button className="new-game">New Game</button>}
     </main>
