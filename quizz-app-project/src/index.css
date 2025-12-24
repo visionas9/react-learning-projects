@@ -5,8 +5,8 @@
 body {
   margin: 0;
   font-family: "Karla", "Inter", sans-serif;
-  background-color: #f5f7fb; /* Light background from screenshot */
-  color: #293264; /* Dark blue text */
+  background-color: #f5f7fb;
+  color: #293264;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,15 +14,14 @@ body {
 }
 
 main {
-  position: relative; /* For absolute positioning of blobs */
   width: 100%;
   max-width: 800px;
-  height: 100vh; /* Fill screen or adjust as needed */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Clips the blobs if they go outside */
+  text-align: center;
 }
 
 /* --- TYPOGRAPHY --- */
@@ -67,7 +66,7 @@ main {
   right: -50px;
   width: 200px;
   height: 200px;
-  background-color: #fffad1; /* Pale yellow */
+  background-color: #fffad1;
   border-radius: 0 0 0 100%; /* Top right corner shape */
   transform: scale(1.5);
 }
@@ -77,7 +76,7 @@ main {
   left: -50px;
   width: 200px;
   height: 200px;
-  background-color: #deebf8; /* Pale blue */
+  background-color: #deebf8;
   border-radius: 0 100% 0 0; /* Bottom left corner shape */
   transform: scale(1.5);
 }
