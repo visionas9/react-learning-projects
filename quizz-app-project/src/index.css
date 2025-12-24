@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Karla", "Inter", sans-serif;
+  background-color: #f5f7fb; /* Light background from screenshot */
+  color: #293264; /* Dark blue text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+main {
+  position: relative; /* For absolute positioning of blobs */
+  width: 100%;
+  max-width: 800px;
+  height: 100vh; /* Fill screen or adjust as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Clips the blobs if they go outside */
+}
+
+/* --- TYPOGRAPHY --- */
+.title {
+  font-size: 3.5rem;
+  margin-bottom: 0px;
+}
+
+.description {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+/* --- BUTTONS --- */
+.primary-btn {
+  width: 190px;
+  height: 50px;
+  background-color: #4d5b9e;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.1s;
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+}
+
+/* --- DECORATION BLOBS --- */
+.blob {
+  position: absolute;
+  z-index: -1; /* Behind the content */
+}
+
+.yellow-blob {
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background-color: #fffad1; /* Pale yellow */
+  border-radius: 0 0 0 100%; /* Top right corner shape */
+  transform: scale(1.5);
+}
+
+.blue-blob {
+  bottom: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background-color: #deebf8; /* Pale blue */
+  border-radius: 0 100% 0 0; /* Bottom left corner shape */
+  transform: scale(1.5);
+}
