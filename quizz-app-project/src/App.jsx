@@ -6,6 +6,8 @@ import "./App.css";
 export default function App() {
   const [started, setStarted] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [score, setScore] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     if (started) {
@@ -29,12 +31,43 @@ export default function App() {
               question: decodedQuestion,
               answers: allAnswers,
               correctAnswer: decodedCorrect,
+              selectedAnswer: "", // Added state for selection
             };
           });
           setQuestions(newQuestions);
         });
     }
   }, [started]);
+
+  function selectAnswer(questionId, answer) {
+    if (!isChecked) {
+      setQuestions((prev) =>
+        prev.map((q) =>
+          q.id === questionId ? { ...q, selectedAnswer: answer } : q
+        )
+      );
+    }
+  }
+
+  function checkAnswers() {
+    let correctCount = 0;
+    questions.forEach((q) => {
+      if (q.selectedAnswer === q.correctAnswer) correctCount++;
+    });
+    setScore(correctCount);
+    setIsChecked(true);
+  }
+
+  const questionElements = questions.map((q) => (
+    <Question
+      key={q.id}
+      id={q.id}
+      question={q.question}
+      answers={q.answers}
+      selectedAnswer={q.selectedAnswer}
+      handleSelectAnswer={selectAnswer}
+    />
+  ));
 
   return (
     <main>
@@ -50,9 +83,19 @@ export default function App() {
         </div>
       ) : (
         <div className="quiz-container">
-          {questions.map((q) => (
-            <Question key={q.id} question={q.question} answers={q.answers} />
-          ))}
+          {questionElements}
+          {questions.length > 0 && (
+            <div className="footer">
+              {isChecked && (
+                <span className="score-text">
+                  You scored {score}/{questions.length} correct answers
+                </span>
+              )}
+              <button className="check-btn" onClick={checkAnswers}>
+                Check answers
+              </button>
+            </div>
+          )}
         </div>
       )}
     </main>
