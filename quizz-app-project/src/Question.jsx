@@ -1,14 +1,15 @@
 import React from "react";
 
 export default function Question(props) {
-  // Simple mapping, no selection logic yet
   const answerElements = props.answers.map((answer) => {
     return (
       <button
         key={answer}
-        className="answer-btn"
-        // Placeholder click
-        onClick={() => console.log("Clicked:", answer)}
+        // Logic for highlighting the selected answer
+        className={`answer-btn ${
+          props.selectedAnswer === answer ? "selected" : ""
+        }`}
+        onClick={() => props.handleSelectAnswer(props.id, answer)}
       >
         {answer}
       </button>
