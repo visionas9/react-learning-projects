@@ -8,9 +8,12 @@ export default function App() {
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
+  const [count, setCount] = useState(0); // <-- To trigger re-fetch
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (started) {
+      setLoading(true);
       fetch(
         "https://opentdb.com/api.php?amount=6&category=9&difficulty=medium&type=multiple"
       )
@@ -22,40 +25,57 @@ export default function App() {
             const decodedIncorrect = q.incorrect_answers.map((a) =>
               he.decode(a)
             );
-            const allAnswers = [...decodedIncorrect, decodedCorrect].sort(
-              () => Math.random() - 0.5
-            );
+
+            const allAnswers = [...decodedIncorrect, decodedCorrect];
+            const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
 
             return {
               id: Math.random().toString(),
               question: decodedQuestion,
-              answers: allAnswers,
+              answers: shuffledAnswers,
               correctAnswer: decodedCorrect,
-              selectedAnswer: "", // Added state for selection
+              selectedAnswer: "",
             };
           });
           setQuestions(newQuestions);
+          setLoading(false);
         });
     }
-  }, [started]);
+  }, [started, count]); // <--'count' added so we can refetch on "Play Again"
+
+  function startGame() {
+    setStarted(true);
+  }
 
   function selectAnswer(questionId, answer) {
+    // Prevent changing answers if game is already checked
     if (!isChecked) {
-      setQuestions((prev) =>
-        prev.map((q) =>
-          q.id === questionId ? { ...q, selectedAnswer: answer } : q
-        )
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((q) => {
+          return q.id === questionId ? { ...q, selectedAnswer: answer } : q;
+        })
       );
     }
   }
 
+  // --- Calculate Score & End Game ---
   function checkAnswers() {
     let correctCount = 0;
     questions.forEach((q) => {
-      if (q.selectedAnswer === q.correctAnswer) correctCount++;
+      if (q.selectedAnswer === q.correctAnswer) {
+        correctCount++;
+      }
     });
     setScore(correctCount);
     setIsChecked(true);
+  }
+
+  // --- Reset Game ---
+  function playAgain() {
+    setIsChecked(false);
+    setScore(0);
+    setCount((prev) => prev + 1); // Triggers the useEffect to fetch new questions
+    setQuestions([]);
   }
 
   const questionElements = questions.map((q) => (
@@ -65,6 +85,8 @@ export default function App() {
       question={q.question}
       answers={q.answers}
       selectedAnswer={q.selectedAnswer}
+      correctAnswer={q.correctAnswer}
+      isChecked={isChecked}
       handleSelectAnswer={selectAnswer}
     />
   ));
@@ -73,28 +95,44 @@ export default function App() {
     <main>
       <div className="blob yellow-blob"></div>
       <div className="blob blue-blob"></div>
+
       {!started ? (
         <div className="start-container">
           <h1 className="title">Quizzical</h1>
           <p className="description">Test your knowledge!</p>
-          <button className="primary-btn" onClick={() => setStarted(true)}>
+          <button className="primary-btn" onClick={startGame}>
             Start quiz
           </button>
         </div>
       ) : (
         <div className="quiz-container">
-          {questionElements}
-          {questions.length > 0 && (
-            <div className="footer">
-              {isChecked && (
-                <span className="score-text">
-                  You scored {score}/{questions.length} correct answers
-                </span>
-              )}
-              <button className="check-btn" onClick={checkAnswers}>
-                Check answers
-              </button>
+          {/* 4. CONDITIONAL RENDERING FOR LOADING */}
+
+          {loading ? (
+            <div className="loading-container">
+              <p className="loading-text">Questions are uploading...</p>
             </div>
+          ) : (
+            <>
+              {questionElements}
+
+              {/* Check button only appears when NOT loading and we have questions */}
+              {questions.length > 0 && (
+                <div className="footer">
+                  {isChecked && (
+                    <span className="score-text">
+                      You scored {score}/{questions.length} correct answers
+                    </span>
+                  )}
+                  <button
+                    className="check-btn"
+                    onClick={isChecked ? playAgain : checkAnswers}
+                  >
+                    {isChecked ? "Play again" : "Check answers"}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
