@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   font-family: "Karla", "Inter", sans-serif;
   background-color: #f5f7fb;
@@ -10,6 +11,7 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+
 main {
   width: 100%;
   max-width: 800px;
@@ -19,16 +21,21 @@ main {
   align-items: center;
   text-align: center;
 }
+
+/* --- TYPOGRAPHY --- */
 .title {
   font-size: 3.5rem;
   margin-bottom: 0px;
 }
+
 .description {
   font-size: 1.2rem;
   font-weight: 400;
   margin-top: 10px;
   margin-bottom: 30px;
 }
+
+/* --- BUTTONS --- */
 .primary-btn {
   width: 190px;
   height: 50px;
@@ -38,11 +45,20 @@ main {
   border-radius: 15px;
   font-size: 1.2rem;
   cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.1s;
 }
+
+.primary-btn:active {
+  transform: scale(0.98);
+}
+
+/* --- DECORATION BLOBS --- */
 .blob {
   position: fixed;
   z-index: -1;
 }
+
 .yellow-blob {
   top: -50px;
   right: -50px;
@@ -63,11 +79,29 @@ main {
   transform: scale(1.5);
 }
 
+/* =========================================
+   NEW STYLES FOR QUIZ & QUESTIONS
+   ========================================= */
+
+/* --- QUIZ CONTAINER --- */
+.quiz-container {
+  height: 120vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 650px; /* Limits width for readability */
+  padding: 20px 0 50px 0;
+}
+
+/* --- QUESTION ITEM --- */
 .question-container {
   width: 100%;
   margin-bottom: 15px;
-  text-align: left;
+  text-align: left; /* Aligns question text to the left */
 }
+
 .question-text {
   font-size: 1.15rem;
   font-weight: 700;
@@ -75,17 +109,22 @@ main {
   line-height: 1.3;
   margin-bottom: 15px;
 }
+
 .divider {
   border: 0;
   border-bottom: 1px solid #dbdef0;
   margin-top: 15px;
   margin-bottom: 20px;
 }
+
+/* --- ANSWER BUTTONS --- */
 .answers-list {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  justify-content: flex-start; /* Aligns buttons to the left */
 }
+
 .answer-btn {
   background-color: transparent;
   border: 1px solid #4d5b9e;
@@ -93,8 +132,11 @@ main {
   padding: 8px 16px;
   color: #293264;
   font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s;
+  min-width: 60px; /* Ensures very short answers aren't too thin */
 }
 
 .answer-btn:hover {
@@ -104,10 +146,10 @@ main {
 /* Selected state (Purple) */
 .answer-btn.selected {
   background-color: #d6dbf5;
-  border: 1px solid #d6dbf5;
+  border: 1px solid #d6dbf5; /* Matches background to remove border look */
 }
 
-/* Check Button */
+/* --- CHECK BUTTON --- */
 .check-btn {
   margin-top: 25px;
   width: 150px;
@@ -119,8 +161,32 @@ main {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  font-family: inherit;
 }
 
+/* --- SCORING & RESULTS --- */
+
+/* 1. Correct Answer (Green) */
+#correct {
+  background-color: #94d7a2;
+  border: none;
+  color: #293264;
+}
+
+/* 2. Wrong Selection (Red/Pink) */
+#incorrect {
+  background-color: #f8bcbc;
+  border: none;
+  color: #293264;
+  opacity: 0.7;
+}
+
+/* 3. Unselected options when game is over (Dimmed) */
+#not-selected {
+  opacity: 0.5;
+}
+
+/* Footer Container */
 .footer {
   display: flex;
   align-items: center;
@@ -129,8 +195,19 @@ main {
   margin-top: 20px;
   width: 100%;
 }
+
 .score-text {
   font-size: 1.1rem;
+  font-weight: 700;
+  color: #293264;
+}
+
+.check-btn {
+  margin: 0;
+}
+
+.loading-text {
+  font-size: 1.5rem;
   font-weight: 700;
   color: #293264;
 }
