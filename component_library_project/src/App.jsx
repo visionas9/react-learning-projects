@@ -1,32 +1,27 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import BadgetPill from "./components/BadgetPill";
 import BadgetSquare from "./components/BadgetSquare";
 
-export default function App() {
-  return (
-    <>
-      <div className="badget-square-div">
-        <BadgetSquare />
-        <BadgetSquare />
-        <BadgetSquare />
-        <BadgetSquare />
-        <BadgetSquare />
-        <BadgetSquare />
-        <BadgetSquare />
-        <BadgetSquare />
-      </div>
+const ToggleContext = React.createContext();
 
-      <div className="badget-pill-div">
-        <BadgetPill />
-        <BadgetPill />
-        <BadgetPill />
-        <BadgetPill />
-        <BadgetPill />
-        <BadgetPill />
-        <BadgetPill />
-        <BadgetPill />
+export default function App() {
+  const [on, setOpen] = useState(false);
+
+  function toggle() {
+    setOpen((prevOpen) => !prevOpen);
+  }
+
+  return (
+    <ToggleContext.Provider value={{ on, toggle }}>
+      <div className="badget-square-div">
+        <button onClick={toggle}>
+          {on ? "close section" : "open section"}
+        </button>
+        {on ? <BadgetSquare /> : null}
       </div>
-    </>
+    </ToggleContext.Provider>
   );
 }
+
+export { ToggleContext };
