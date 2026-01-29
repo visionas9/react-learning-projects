@@ -20,14 +20,4 @@ This repository tracks my progress as I master modern web development with **Rea
 - **Styling:** CSS3, CSS Modules, Responsive Design
 - **Version Control:** Git & GitHub
 
-## 💻 Run this on your computer
 
-1. **Clone the repo:** `git clone https://github.com/visionas9/react-learning-projects.git`
-2. **Open the folder:** `cd react-learning-projects/tenzies-project`
-3. **Install & Start:**
-
-   ```bash
-   npm install
-   npm run dev
-
-   ```
