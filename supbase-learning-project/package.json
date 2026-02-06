@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.2",
+    "@react-aria/utils": "^3.33.0",
+    "@supabase/supabase-js": "^2.95.3",
     "react": "^19.0.0",
     "react-charts": "^3.0.0-beta.57",
     "react-dom": "^19.0.0",

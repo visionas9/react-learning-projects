@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import Signin from "./src/components/Signin";
-import Header from "./src/components/Header";
-import Dashboard from "./src/routes/Dashboard";
+import Signin from "../components/Signin";
+import Header from "../components/Header";
+import Dashboard from "./Dashboard";
 
 export const router = createBrowserRouter([
   {
