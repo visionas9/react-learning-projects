@@ -1,4 +1,20 @@
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 function Header() {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleSignOut() {
+    const { success, error } = await signOut();
+    if (success) {
+      navigate("/");
+    }
+    if (error) {
+      console.error("Something went wrong while signout", error);
+    }
+  }
+
   return (
     <>
       <header role="banner" aria-label="Dashboard header">
@@ -23,6 +39,10 @@ function Header() {
           </svg>
           <span>Sales Team Dashboard</span>
         </h1>
+
+        <button className="sign-out-button" onClick={handleSignOut}>
+          Sign Out
+        </button>
       </header>
     </>
   );

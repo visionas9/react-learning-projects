@@ -1,16 +1,34 @@
 import { useActionState } from "react";
 import React from "react";
-//import { Link } from "react-router-dom";  --- IGNORE ---
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Signin() {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+
   const [error, submitAction, isPending] = useActionState(
     async (prevSession, formData) => {
       //extract email and password
       const email = formData.get("email");
       const password = formData.get("password");
       // Implement your sign-in logic here, such as calling an API or using a service like Supabase.
-      console.log("Email:", email);
-      console.log("Password:", password);
+
+      const {
+        success,
+        data,
+        error: signInError,
+      } = await signIn(email, password);
+
+      if (signInError) {
+        return new Error(signInError);
+      }
+      if (success && data?.session) {
+        navigate("/dashboard");
+        return null;
+      }
+      return null;
     },
     null,
   );
@@ -31,9 +49,10 @@ export default function Signin() {
 
           <h2 className="form-title">Sign in</h2>
           <p>
-            Don't have an account yet? {/*<Link className="form-link">*/}
-            Sign up
-            {/*</Link>*/}
+            Don't have an account yet?{" "}
+            <Link className="form-link" to="/signup">
+              Sign up
+            </Link>
           </p>
 
           <label htmlFor="email">Email</label>
@@ -45,9 +64,9 @@ export default function Signin() {
             placeholder=""
             required
             aria-required="true"
-            //aria-invalid=
-            //aria-describedby=
-            //disabled=
+            aria-invalid={error ? "true" : "false"}
+            aria-describedby={error ? "signin-error" : undefined}
+            disabled={isPending}
           />
 
           <label htmlFor="password">Password</label>
@@ -59,22 +78,29 @@ export default function Signin() {
             placeholder=""
             required
             aria-required="true"
-            //aria-invalid=
-            //aria-describedby=
-            //disabled=
+            aria-invalid={error ? "true" : "false"}
+            aria-describedby={error ? "signin-error" : undefined}
+            disabled={isPending}
           />
 
           <button
             type="submit"
+            disabled={isPending}
             className="form-button"
-            //className=
-            //aria-busy=
+            aria-busy={isPending}
           >
-            Sign In
-            {/*'Signing in...' when pending*/}
+            {isPending ? "Signing in..." : "Sign In"}
           </button>
 
-          {/* Error message */}
+          {error && (
+            <div
+              id="signin-error"
+              role="alert"
+              className="sign-form-error-message"
+            >
+              {error.message}
+            </div>
+          )}
         </form>
       </div>
     </>

@@ -31,8 +31,41 @@ export default function AuthContextProvider({ children }) {
     });
   }, []);
 
+  async function signIn(email, password) {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.toLowerCase(),
+        password: password,
+      });
+      if (error) {
+        console.log("Error signing in:", error);
+        return { success: false, error };
+      }
+      console.log("Sign-in successful:", data);
+      return { success: true, data };
+    } catch (error) {
+      console.log("Error signing in:", error);
+      return { success: false, error: "An error occurred while signing in." };
+    }
+  }
+
+  async function signOut() {
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        console.log("Error signout:", error);
+        return { success: false, error };
+      }
+      return { success: true };
+    } catch (error) {
+      console.log("Error signing out:", error);
+      return { success: false, error: "An error occurred while signing out." };
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ session, setSession }}>
+    <AuthContext.Provider value={{ session, setSession, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

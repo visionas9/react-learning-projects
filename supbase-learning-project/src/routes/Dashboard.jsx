@@ -32,16 +32,15 @@ function Dashboard() {
 
   async function fetchMetrics() {
     try {
-      const { data, error } = await supabase.from("sales_deals").select(
-        `
-          name,
-          value.sum()
-          `,
-      );
+      const { data, error } = await supabase
+        .from("sales_deals")
+        .select("name, value");
+
       if (error) {
         throw error;
       }
-      setMetrics(data);
+
+      setMetrics(data || []);
     } catch (error) {
       console.error("Error fetching metrics:", error);
     }
@@ -51,7 +50,7 @@ function Dashboard() {
     {
       data: metrics.map((m) => ({
         primary: m.name,
-        secondary: m.sum,
+        secondary: m.value,
       })),
     },
   ];
@@ -65,8 +64,8 @@ function Dashboard() {
 
   function y_max() {
     if (metrics.length > 0) {
-      const maxSum = Math.max(...metrics.map((m) => m.sum));
-      return maxSum + 2000;
+      const maxValue = Math.max(...metrics.map((m) => m.value));
+      return maxValue + 2000;
     }
     return 5000;
   }
