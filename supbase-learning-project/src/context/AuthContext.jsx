@@ -64,8 +64,28 @@ export default function AuthContextProvider({ children }) {
     }
   }
 
+  async function signUp(email, password) {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: email.toLowerCase(),
+        password: password,
+      });
+      if (error) {
+        console.error("Error signing up:", error);
+        return { success: false, error };
+      }
+      console.log("Sign-up successful:", data);
+      return { success: true, data };
+    } catch (error) {
+      console.error("Error signing up:", error);
+      return { success: false, error: "An error occurred while signing up." };
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ session, setSession, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ session, setSession, signIn, signOut, signUp }}
+    >
       {children}
     </AuthContext.Provider>
   );
